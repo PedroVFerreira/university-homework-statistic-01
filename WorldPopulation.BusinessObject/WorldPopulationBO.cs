@@ -14,25 +14,53 @@ namespace WorldPopulation.BusinessObject
         private readonly ILogger Logger;
 
         private readonly IApiClient Api;
-        public WorldPopulationBO(ILogger logger, IApiClient api)
+
+        private readonly IExporter Exporter;
+
+        private List<Country> countries;
+
+        public WorldPopulationBO(ILogger logger, IApiClient api, IExporter exporter)
         {
             Logger = logger;
             Api = api;
+            Exporter = exporter;
             Api.GetInstance();
         }
 
         public int Process()
         {
-            Logger.Log("GETTING COUNTRIES", HeaderTypes.Header2);
-            List<Country> countries =  Api.GetListOfCountries();
+            GetDatas();
 
+            Export();
+
+            return 1;   
+        }
+
+        public void GetDatas()
+        {
+            Logger.Log("GETTING COUNTRIES", HeaderTypes.Header2);
+            countries = Api.GetListOfCountries();
+
+            GetNumbersByCountry(countries);
+
+            Export();
+
+        }
+
+        public bool Export()
+        {
+            Exporter.Export(countries);
+            return true;
+        }
+        public void GetNumbersByCountry(List<Country> countries)
+        {
             foreach (Country country in countries)
             {
                 try
                 {
                     if (country.Name.ToUpper() == country.Name)
                         break;
-                    Logger.Log(String.Format("GETING INFO : {0}",country.Name), HeaderTypes.Header3);
+                    Logger.Log(String.Format("GETING INFO : {0}", country.Name), HeaderTypes.Header3);
                     country.PopulationIn1910 = Api.GetPopulationByYear(country.Name, 1990);
                     country.PopulationToday = Api.GetPopulationByYear(country.Name, DateTime.Today.Year);
                     country.MortalityDistributionUntil5Years = Api.GetMortalityDistributionUntil5Years(country.Name);
@@ -42,10 +70,6 @@ namespace WorldPopulation.BusinessObject
                     Logger.Log(ex.Message, HeaderTypes.Error);
                 }
             }
-
-
-
-            return 1;   
         }
 
     }

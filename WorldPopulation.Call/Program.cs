@@ -14,16 +14,16 @@ namespace WorldPopulation.Call
         public static void Main(string[] args)
         {
             ILogger Log = WorldPopulationFacade.InitializeLogger();
+
+            WorldPopulationBO WorldPopulation = WorldPopulationFacade.InitializeWorldPopulationBO();
+            
             try
             {
                 
                 Log.Log("STARTING PROCESS", HeaderTypes.Header1);
 
-                WorldPopulationBO WorldPopulation = WorldPopulationFacade.InitializeWorldPopulationBO();
+                WorldPopulation.Process();                
                 
-
-                WorldPopulation.Process();
-
                 Log.Log("END OF PROCESS", HeaderTypes.Header1);
 
             }
