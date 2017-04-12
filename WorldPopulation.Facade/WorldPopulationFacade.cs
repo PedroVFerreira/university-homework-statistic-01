@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WorldPopulation.Framework;
 using WorldPopulation.BusinessObject;
 using WorldPopulationWebApi;
+using ExportToExcel;
 
 namespace WorldPopulation.Facade
 {
@@ -13,7 +14,7 @@ namespace WorldPopulation.Facade
     {
         public static WorldPopulationBO InitializeWorldPopulationBO()
         {
-            return new WorldPopulationBO(InitializeLogger() , InitializeWebApi() );
+            return new WorldPopulationBO(InitializeLogger() , InitializeWebApi() , InitializeExporter());
         }
 
         public static IApiClient InitializeWebApi()
@@ -24,6 +25,10 @@ namespace WorldPopulation.Facade
         public static ILogger InitializeLogger()
         {
             return new ConsoleLogger();
+        }
+        public static IExporter InitializeExporter()
+        {
+            return new ExportToExcel.Exporter();
         }
     }
 }

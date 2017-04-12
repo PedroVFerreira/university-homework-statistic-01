@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExportToExcel\ExportToExcel.csproj">
+      <Project>{fdcab0ff-2ab5-495a-be78-0a9671004cfb}</Project>
+      <Name>ExportToExcel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorldPopulation.BusinessObject\WorldPopulation.BusinessObject.csproj">
       <Project>{fbdc9972-9325-47a0-9227-5d492fb25613}</Project>
       <Name>WorldPopulation.BusinessObject</Name>
