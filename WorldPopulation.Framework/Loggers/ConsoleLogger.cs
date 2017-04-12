@@ -12,7 +12,7 @@ namespace WorldPopulation.Framework
         {
             string newMessage = Format(message, type);
 
-            Console.WriteLine();
+            Console.WriteLine(newMessage);
         }
 
         public string Format(string message, HeaderTypes type)

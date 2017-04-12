@@ -23,13 +23,16 @@ namespace WorldPopulation.BusinessObject
 
         public int Process()
         {
-            Logger.Log("GETING COUNTRIES", HeaderTypes.Header2);
+            Logger.Log("GETTING COUNTRIES", HeaderTypes.Header2);
             List<Country> countries =  Api.GetListOfCountries();
 
             foreach (Country country in countries)
             {
                 try
                 {
+                    if (country.Name.ToUpper() == country.Name)
+                        break;
+                    Logger.Log(String.Format("GETING INFO : {0}",country.Name), HeaderTypes.Header3);
                     country.PopulationIn1910 = Api.GetPopulationByYear(country.Name, 1990);
                     country.PopulationToday = Api.GetPopulationByYear(country.Name, DateTime.Today.Year);
                     country.MortalityDistributionUntil5Years = Api.GetMortalityDistributionUntil5Years(country.Name);
@@ -39,6 +42,8 @@ namespace WorldPopulation.BusinessObject
                     Logger.Log(ex.Message, HeaderTypes.Error);
                 }
             }
+
+
 
             return 1;   
         }
