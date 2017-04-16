@@ -54,7 +54,7 @@ namespace ExportToExcel
                 row ++;
             }
 
-            SaveFile("C:\\", "Final", xlApp, xlWorkBook, misValue);
+            SaveFile("C:\\", "Test", xlApp, xlWorkBook, misValue);
 
             releaseObject(xlWorkSheet);
             releaseObject(xlWorkBook);
