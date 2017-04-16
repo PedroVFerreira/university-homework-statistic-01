@@ -59,7 +59,7 @@ namespace WorldPopulation.BusinessObject
                 try
                 {
                     if (country.Name.ToUpper() == country.Name)
-                        break;
+                        continue;
                     Logger.Log(String.Format("GETING INFO : {0}", country.Name), HeaderTypes.Header3);
                     country.PopulationIn1910 = Api.GetPopulationByYear(country.Name, 1990);
                     country.PopulationToday = Api.GetPopulationByYear(country.Name, DateTime.Today.Year);

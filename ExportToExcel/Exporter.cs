@@ -25,8 +25,8 @@ namespace ExportToExcel
             int row = 1;
 
             xlWorkSheet.Cells[row, 1] = "Country";
-            xlWorkSheet.Cells[row, 2] = "Female Mortality 5 Years";
-            xlWorkSheet.Cells[row, 3] = "Male Mortality 5 Years";
+            xlWorkSheet.Cells[row, 2] = "Female Mortality 5 Years (%)";
+            xlWorkSheet.Cells[row, 3] = "Male Mortality 5 Years (%)";
             xlWorkSheet.Cells[row, 4] = "Female Population at 1990";
             xlWorkSheet.Cells[row, 5] = "Male Population at 1990";
             xlWorkSheet.Cells[row, 6] = "Female Life Expectancy at 1990";
@@ -41,20 +41,20 @@ namespace ExportToExcel
             foreach (Country country in countries.Where(c => c.PopulationIn1910 != null && c.PopulationToday != null).ToList())
             {
                 xlWorkSheet.Cells[row, 1] = country.Name;
-                xlWorkSheet.Cells[row, 2] = country.MortalityDistributionUntil5Years.Where(c => c.Key == Sex.Female).Single().Value;
-                xlWorkSheet.Cells[row, 3] = country.MortalityDistributionUntil5Years.Where(c => c.Key == Sex.Male).Single().Value;
+                xlWorkSheet.Cells[row, 2] = Math.Round(country.MortalityDistributionUntil5Years.Where(c => c.Key == Sex.Female).Single().Value, 2);
+                xlWorkSheet.Cells[row, 3] = Math.Round(country.MortalityDistributionUntil5Years.Where(c => c.Key == Sex.Male).Single().Value, 2);
                 xlWorkSheet.Cells[row, 4] = country.PopulationIn1910.Female.Count;
                 xlWorkSheet.Cells[row, 5] = country.PopulationIn1910.Male.Count;
-                xlWorkSheet.Cells[row, 6] = country.PopulationIn1910.Female.LifeExpectancy;
-                xlWorkSheet.Cells[row, 7] = country.PopulationIn1910.Male.LifeExpectancy;
+                xlWorkSheet.Cells[row, 6] = Math.Round(country.PopulationIn1910.Female.LifeExpectancy, 2);
+                xlWorkSheet.Cells[row, 7] = Math.Round(country.PopulationIn1910.Male.LifeExpectancy, 2);
                 xlWorkSheet.Cells[row, 8] = country.PopulationToday.Female.Count;
                 xlWorkSheet.Cells[row, 9] = country.PopulationToday.Male.Count;
-                xlWorkSheet.Cells[row, 10] = country.PopulationToday.Female.LifeExpectancy;
-                xlWorkSheet.Cells[row, 11] = country.PopulationToday.Male.LifeExpectancy;
+                xlWorkSheet.Cells[row, 10] = Math.Round(country.PopulationToday.Female.LifeExpectancy, 2);
+                xlWorkSheet.Cells[row, 11] = Math.Round(country.PopulationToday.Male.LifeExpectancy, 2);
                 row ++;
             }
 
-            SaveFile("C:\\", "Test", xlApp, xlWorkBook, misValue);
+            SaveFile("C:\\", "Final", xlApp, xlWorkBook, misValue);
 
             releaseObject(xlWorkSheet);
             releaseObject(xlWorkBook);
